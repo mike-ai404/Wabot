@@ -112,12 +112,10 @@ function computeAlias(jid) {
   }
 }
 function resolveAlias(input, chatsMap) {
-  // input bisa "alias" atau "jid" 
+  // input bisa "alias" atau "jid"
   if (input.includes("@")) {
-    // dianggap JID langsung
     return input;
   }
-  // cari JID yang alias-nya sama
   for (const jid of Object.keys(chatsMap)) {
     if (computeAlias(jid) === input) return jid;
   }
@@ -492,7 +490,7 @@ function isAdmin(userJid) {
         "   - Hapus satu jadwal.\n\n" +
         "10. *!clearjadwal*\n" +
         "    - Hapus semua jadwal mingguan.\n\n" +
-        "11. *!ingat <YYYY-MM-DD>+<jam.menit>(<pesan>)*\n" +
+        "11. *!ingat <alias>+<YYYY-MM-DD>+<jam.menit>(<pesan>)*\n" +
         "    - Pengingat one-time (alias diperbolehkan untuk chatId).\n\n" +
         "12. *!listonetime*\n" +
         "    - Daftar pengingat one-time.\n\n" +
@@ -798,7 +796,7 @@ function isAdmin(userJid) {
           `• Waktu: ${String(jamBaru).padStart(2, "00")}:${String(
             menitBaru
           ).padStart(2, "00")}\n` +
-          `• Pesan: {msgNew}`,
+          `• Pesan: ${msgNew}`,
       });
       return;
     }
@@ -839,7 +837,7 @@ function isAdmin(userJid) {
         await bot.sendMessage(from, {
           text:
             "❗ Format salah. Contoh:\n" +
-            "!ingat 2025-06-05+14.30(Hai @48137449, ingat rapat!)",
+            "!ingat 48137449+2025-06-05+14.30(Hai @48137449, ingat rapat!)",
         });
         return;
       }
@@ -863,12 +861,8 @@ function isAdmin(userJid) {
       const dateStr = tmMsg.slice(0, ob).trim();
       const msgContent = tmMsg.slice(ob + 1, cb).trim();
 
-      if (!dateStr.includes(".")) {
-        await bot.sendMessage(from, { text: "❗ Format waktu harus HH.mm, contohnya 07.15." });
-        return;
-      }
-      const [tglPart, timePart] = dateStr.split("+");
-      const [year, month, day] = tglPart.split("-").map((x) => parseInt(x, 10));
+      const [datePart, timePart] = dateStr.split("+");
+      const [year, month, day] = datePart.split("-").map((x) => parseInt(x, 10));
       const [jamStrI, menitStrI] = timePart.split(".");
       const jamI = parseInt(jamStrI, 10);
       const menitI = parseInt(menitStrI, 10);
@@ -1172,6 +1166,54 @@ function isAdmin(userJid) {
       return;
     }
 
+    // ===== FITUR BARU UNTUK GRUP (3 tambahan) =====
+    if (from.endsWith("@g.us")) {
+      // 1. !membercount => tampilkan jumlah anggota grup
+      if (trimmed === "!membercount") {
+        try {
+          const metadata = await bot.groupMetadata(from);
+          const count = metadata.participants.length;
+          await bot.sendMessage(from, { text: `👥 Jumlah anggota: ${count}` });
+        } catch {
+          await bot.sendMessage(from, { text: "❗ Gagal mengambil jumlah anggota." });
+        }
+        return;
+      }
+
+      // 2. !randommember => pilih satu anggota secara acak
+      if (trimmed === "!randommember") {
+        try {
+          const metadata = await bot.groupMetadata(from);
+          const participants = metadata.participants.map((p) => p.id);
+          if (participants.length === 0) {
+            await bot.sendMessage(from, { text: "❗ Grup kosong." });
+            return;
+          }
+          const randomJid = participants[Math.floor(Math.random() * participants.length)];
+          const name = loadChats()[randomJid] || randomJid.split("@")[0];
+          await bot.sendMessage(from, {
+            text: `🎲 Random Member: @${randomJid.split("@")[0]}\nNama: ${name}`,
+            mentions: [randomJid],
+          });
+        } catch {
+          await bot.sendMessage(from, { text: "❗ Gagal memilih random member." });
+        }
+        return;
+      }
+
+      // 3. !groupdesc => tampilkan deskripsi/grup tentang grup jika ada
+      if (trimmed === "!groupdesc") {
+        try {
+          const metadata = await bot.groupMetadata(from);
+          const desc = metadata.desc || "*(Tidak ada deskripsi)*";
+          await bot.sendMessage(from, { text: `📝 Deskripsi Grup:\n${desc}` });
+        } catch {
+          await bot.sendMessage(from, { text: "❗ Gagal mengambil deskripsi grup." });
+        }
+        return;
+      }
+    }
+
     // ===== PENGUJIAN PERINTAH TIDAK DIKENAL =======
     if (trimmed.startsWith("!")) {
       await bot.sendMessage(from, {
@@ -1228,4 +1270,3 @@ function isAdmin(userJid) {
   }); // end messages.upsert
 
 })(); // end start()
-
