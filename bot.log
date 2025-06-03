@@ -1,0 +1,194 @@
+
+> wabase@3.0.0 start
+> node index.js
+
+✅ Terhubung sebagai: 6281770597826
+   • Jadwal mingguan: 3 job
+   • One-time reminder: 0 job
+{"level":50,"time":1748919087795,"pid":29878,"hostname":"localhost","node":{"tag":"stream:error","attrs":{},"content":[{"tag":"conflict","attrs":{"type":"replaced"}}]},"msg":"stream errored out"}
+⛔ Koneksi terputus: {
+  statusCode: 440,
+  error: 'Unknown',
+  message: 'Stream Errored (conflict)'
+}
+✅ Terhubung sebagai: 6281770597826
+   • Jadwal mingguan: 3 job
+   • One-time reminder: 0 job
+{"level":50,"time":1748919091623,"pid":29878,"hostname":"localhost","node":{"tag":"stream:error","attrs":{},"content":[{"tag":"conflict","attrs":{"type":"replaced"}}]},"msg":"stream errored out"}
+⛔ Koneksi terputus: {
+  statusCode: 440,
+  error: 'Unknown',
+  message: 'Stream Errored (conflict)'
+}
+✅ Terhubung sebagai: 6281770597826
+   • Jadwal mingguan: 3 job
+   • One-time reminder: 0 job
+{"level":50,"time":1748919095203,"pid":29878,"hostname":"localhost","node":{"tag":"stream:error","attrs":{},"content":[{"tag":"conflict","attrs":{"type":"replaced"}}]},"msg":"stream errored out"}
+⛔ Koneksi terputus: {
+  statusCode: 440,
+  error: 'Unknown',
+  message: 'Stream Errored (conflict)'
+}
+Failed to decrypt message with any known session...
+Session error:MessageCounterError: Key used already or never filled MessageCounterError: Key used already or never filled
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:236:19)
+    at SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:40)
+    at 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:39)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/s✅ Terhubung sebagai: 6281770597826
+   • Jadwal mingguan: 3 job
+   • One-time reminder: 0 job
+{"level":50,"time":1748919100474,"pid":28740,"hostname":"localhost","node":{"tag":"stream:error","attrs":{},"content":[{"tag":"conflict","attrs":{"type":"replaced"}}]},"msg":"stream errored out"}
+⛔ Koneksi terputus: {
+  statusCode: 440,
+  error: 'Unknown',
+  message: 'Stream Errored (conflict)'
+}
+[32;1m?[0m [1mIngin terhubung menggunakan pairing code? [Y/n]: [0m ecryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+Session error:Error: Bad MAC Error: Bad MAC
+    at Object.verifyMAC (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/crypto.js:87:15)
+    at SessionCipher.doDecryptWhisperMessage (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:250:16)
+    at async SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:147:29)
+    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)
+    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)
+{"level":50,"time":1748919097242,"pid":29878,"hostname":"localhost","key":{"remoteJid":"6287774037795@s.whatsapp.net","fromMe":false,"id":"DB6D799E227752C5F25AE73F44EC309C"},"err":{"type":"SessionError","message":"No matching sessions found for message","stack":"SessionError: No matching sessions found for message\n    at SessionCipher.decryptWithSessions (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:161:15)\n    at async 6287774037795.0 [as awaitable] (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/session_cipher.js:171:28)\n    at async _asyncQueueExecutor (/data/data/com.termux/files/home/wabase/node_modules/libsignal/src/queue_job.js:20:29)","name":"SessionError"},"msg":"failed to decrypt message"}
+✅ Terhubung sebagai: 6281770597826
+   • Jadwal mingguan: 3 job
+   • One-time reminder: 0 job
+{"level":50,"time":1748919098662,"pid":29878,"hostname":"localhost","node":{"tag":"stream:error","attrs":{},"content":[{"tag":"conflict","attrs":{"type":"replaced"}}]},"msg":"stream errored out"}
+⛔ Koneksi terputus: {
+  statusCode: 440,
+  error: 'Unknown',
+  message: 'Stream Errored (conflict)'
+}
+✅ Terhubung sebagai: 6281770597826
+   • Jadwal mingguan: 3 job
+   • One-time reminder: 0 job
+/data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Socket/socket.js:57
+            throw new boom_1.Boom('Connection Closed', { statusCode: Types_1.DisconnectReason.connectionClosed });
+                  ^
+
+Error: Connection Closed
+    at sendRawMessage (/data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Socket/socket.js:57:19)
+    at sendNode (/data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Socket/socket.js:76:16)
+    at /data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Socket/messages-send.js:453:19
+    at async Object.transaction (/data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Utils/auth-utils.js:135:26)
+    at async relayMessage (/data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Socket/messages-send.js:287:9)
+    at async sendPeerDataOperationMessage (/data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Socket/messages-send.js:218:23)
+    at async sendRetryRequest (/data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Socket/messages-recv.js:99:27)
+    at async /data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Socket/messages-recv.js:644:33
+    at async /data/data/com.termux/files/home/wabase/node_modules/@whiskeysockets/baileys/lib/Utils/make-mutex.js:19:36 {
+  data: null,
+  isBoom: true,
+  isServer: false,
+  output: {
+    statusCode: 428,
+    payload: {
+      statusCode: 428,
+      error: 'Precondition Required',
+      message: 'Connection Closed'
+    },
+    headers: {}
+  }
+}
+
+Node.js v23.11.1
+✅ Terhubung sebagai: 6281770597826
+   • Jadwal mingguan: 3 job
+   • One-time reminder: 0 job
