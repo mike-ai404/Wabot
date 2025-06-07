@@ -112,10 +112,12 @@ function computeAlias(jid) {
   }
 }
 function resolveAlias(input, chatsMap) {
-  // input bisa "alias" atau "jid"
+  // input bisa "alias" atau "jid" 
   if (input.includes("@")) {
+    // dianggap JID langsung
     return input;
   }
+  // cari JID yang alias-nya sama
   for (const jid of Object.keys(chatsMap)) {
     if (computeAlias(jid) === input) return jid;
   }
@@ -321,8 +323,8 @@ function isAdmin(userJid) {
       saveChats(chatsMap);
     }
 
-    // ======= COMMAND UNTUK SEMUA: !info =======
-    if (trimmed === "!info") {
+    // ======= COMMAND UNTUK SEMUA: .info =======
+    if (trimmed === ".info") {
       const infoText = loadInfo();
       if (!infoText) {
         await bot.sendMessage(from, { text: "ℹ️ Belum ada informasi yang disetel oleh admin." });
@@ -334,11 +336,11 @@ function isAdmin(userJid) {
 
     // ======= FITUR BARU UNTUK SEMUA =======
 
-    // 1. !flip <teks> => membalik teks
-    if (trimmed.startsWith("!flip ")) {
+    // 1. .flip <teks> => membalik teks
+    if (trimmed.startsWith(".flip ")) {
       const toFlip = trimmed.slice(6).trim();
       if (!toFlip) {
-        await bot.sendMessage(from, { text: "❗ Contoh: !flip Halo Dunia" });
+        await bot.sendMessage(from, { text: "❗ Contoh: .flip Halo Dunia" });
       } else {
         const flipped = toFlip.split("").reverse().join("");
         await bot.sendMessage(from, { text: `🔄 ${flipped}` });
@@ -346,11 +348,11 @@ function isAdmin(userJid) {
       return;
     }
 
-    // 2. !rand <min> <max> => angka random antara min dan max
-    if (trimmed.startsWith("!rand ")) {
+    // 2. .rand <min> <max> => angka random antara min dan max
+    if (trimmed.startsWith(".rand ")) {
       const parts = trimmed.slice(6).trim().split(" ");
       if (parts.length !== 2) {
-        await bot.sendMessage(from, { text: "❗ Contoh: !rand 1 100" });
+        await bot.sendMessage(from, { text: "❗ Contoh: .rand 1 100" });
       } else {
         const min = parseInt(parts[0], 10);
         const max = parseInt(parts[1], 10);
@@ -364,11 +366,11 @@ function isAdmin(userJid) {
       return;
     }
 
-    // 3. !calc <ekspresi> => hitung ekspresi aritmatika sederhana
-    if (trimmed.startsWith("!calc ")) {
+    // 3. .calc <ekspresi> => hitung ekspresi aritmatika sederhana
+    if (trimmed.startsWith(".calc ")) {
       const expr = trimmed.slice(6).trim();
       if (!expr) {
-        await bot.sendMessage(from, { text: "❗ Contoh: !calc 12*(3+4)/2" });
+        await bot.sendMessage(from, { text: "❗ Contoh: .calc 12*(3+4)/2" });
       } else {
         try {
           // Hanya izinkan angka, operator + - * / () dan spasi
@@ -385,11 +387,11 @@ function isAdmin(userJid) {
       return;
     }
 
-    // 4. !timezonetime <zona> => waktu di zona waktu tertentu
-    if (trimmed.startsWith("!timezonetime ")) {
+    // 4. .timezonetime <zona> => waktu di zona waktu tertentu
+    if (trimmed.startsWith(".timezonetime ")) {
       const zone = trimmed.slice(13).trim();
       if (!zone) {
-        await bot.sendMessage(from, { text: "❗ Contoh: !timezonetime Asia/Tokyo" });
+        await bot.sendMessage(from, { text: "❗ Contoh: .timezonetime Asia/Tokyo" });
       } else {
         try {
           const now = new Date();
@@ -403,12 +405,12 @@ function isAdmin(userJid) {
       return;
     }
 
-    // 5. !whois <@mention> => info dasar user
-    if (trimmed.startsWith("!whois ")) {
+    // 5. .whois <@mention> => info dasar user
+    if (trimmed.startsWith(".whois ")) {
       const after = trimmed.slice(7).trim();
       const { mentions } = parseMentions(after);
       if (mentions.length === 0) {
-        await bot.sendMessage(from, { text: "❗ Contoh: !whois @+6281234567890" });
+        await bot.sendMessage(from, { text: "❗ Contoh: .whois @+6281234567890" });
       } else {
         const userJid = mentions[0];
         const displayName = loadChats()[userJid] || userJid.split("@")[0];
@@ -420,7 +422,7 @@ function isAdmin(userJid) {
     }
 
     // ======= LOGIN ADMIN (hanya di chat privat) =======
-    if (!from.endsWith("@g.us") && trimmed.startsWith("!login ")) {
+    if (!from.endsWith("@g.us") && trimmed.startsWith(".login ")) {
       const pass = trimmed.slice(7).trim();
       if (pass === ADMIN_PASSWORD) {
         authenticatedAdmins.add(sender);
@@ -432,7 +434,7 @@ function isAdmin(userJid) {
     }
 
     // ======= LOGOUT ADMIN =======
-    if (!from.endsWith("@g.us") && trimmed === "!logout") {
+    if (!from.endsWith("@g.us") && trimmed === ".logout") {
       if (isAdmin(sender)) {
         authenticatedAdmins.delete(sender);
         await bot.sendMessage(from, { text: "🔒 Anda telah logout dari akses admin." });
@@ -442,22 +444,22 @@ function isAdmin(userJid) {
       return;
     }
 
-    // Jika bukan login/logout atau !info dan belum admin, tolak semua perintah yang dimulai "!"
-    if (!isAdmin(sender) && trimmed.startsWith("!") && trimmed !== "!info") {
+    // Jika bukan login/logout atau .info dan belum admin, tolak semua perintah yang dimulai "."
+    if (!isAdmin(sender) && trimmed.startsWith(".") && trimmed !== ".info") {
       await bot.sendMessage(from, {
-        text: "❗ Anda harus login sebagai admin dulu di chat pribadi. Gunakan: !login <password>",
+        text: "❗ Anda harus login sebagai admin dulu di chat pribadi. Gunakan: .login <password>",
       });
       return;
     }
 
     // ======= COMMANDS UNTUK ADMIN =======
 
-    // ===== !setinfo =====
-    if (trimmed.startsWith("!setinfo ")) {
+    // ===== .setinfo =====
+    if (trimmed.startsWith(".setinfo ")) {
       const infoText = trimmed.slice(9).trim();
       if (!infoText) {
         await bot.sendMessage(from, {
-          text: "❗ Contoh: !setinfo Ini adalah informasi grup yang ditampilkan kepada semua pengguna.",
+          text: "❗ Contoh: .setinfo Ini adalah informasi grup yang ditampilkan kepada semua pengguna.",
         });
         return;
       }
@@ -466,85 +468,79 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !help =====
-    if (trimmed === "!help") {
+    // ===== .help =====
+    if (trimmed === ".help") {
       const helpText =
         "📖 *Daftar Perintah Bot (Admin saja)*\n\n" +
-        "1. *!login <password>*\n" +
-        "   - Login sebagai admin di chat pribadi. Contoh: !login megalodon\n\n" +
-        "2. *!logout*\n" +
+        "1. *.login <password>*\n" +
+        "   - Login sebagai admin di chat pribadi. Contoh: .login megalodon\n\n" +
+        "2. *.logout*\n" +
         "   - Logout dari akses admin.\n\n" +
-        "3. *!help*\n" +
+        "3. *.help*\n" +
         "   - Menampilkan menu bantuan ini.\n\n" +
-        "4. *!chatid*\n" +
+        "4. *.chatid*\n" +
         "   - Menampilkan daftar chat dengan format alias (id)-(jid)-(nama).\n\n" +
-        "5. *!jadwal <alias>+<hari>+<jam.menit>(<pesan>)*\n" +
+        "5. *.jadwal <alias>+<hari>+<jam.menit>(<pesan>)*\n" +
         "   - Tambah jadwal mingguan otomatis (alias diperbolehkan, contoh: 48137449).\n\n" +
-        "6. *!listjadwal*\n" +
+        "6. *.listjadwal*\n" +
         "   - Daftar semua jadwal mingguan.\n\n" +
-        "7. *!nextjadwal*\n" +
+        "7. *.nextjadwal*\n" +
         "   - Jadwal mingguan berikutnya.\n\n" +
-        "8. *!editjadwal <nomor> <hari>+<jam.menit>(<pesan>)*\n" +
+        "8. *.editjadwal <nomor> <hari>+<jam.menit>(<pesan>)*\n" +
         "   - Edit jadwal mingguan.\n\n" +
-        "9. *!hapusjadwal <nomor>*\n" +
+        "9. *.hapusjadwal <nomor>*\n" +
         "   - Hapus satu jadwal.\n\n" +
-        "10. *!clearjadwal*\n" +
+        "10. *.clearjadwal*\n" +
         "    - Hapus semua jadwal mingguan.\n\n" +
-        "11. *!ingat <alias>+<YYYY-MM-DD>+<jam.menit>(<pesan>)*\n" +
+        "11. *.ingat <YYYY-MM-DD>+<jam.menit>(<pesan>)*\n" +
         "    - Pengingat one-time (alias diperbolehkan untuk chatId).\n\n" +
-        "12. *!listonetime*\n" +
+        "12. *.listonetime*\n" +
         "    - Daftar pengingat one-time.\n\n" +
-        "13. *!hapusot <nomor>*\n" +
+        "13. *.hapusot <nomor>*\n" +
         "    - Hapus satu pengingat one-time.\n\n" +
-        "14. *!nextonetime*\n" +
+        "14. *.nextonetime*\n" +
         "    - Pengingat one-time berikutnya.\n\n" +
-        "15. *!status*\n" +
+        "15. *.status*\n" +
         "    - Status bot (uptime, jumlah job, dll).\n\n" +
-        "16. *!broadcast <pesan>*\n" +
+        "16. *.broadcast <pesan>*\n" +
         "    - Kirim pesan ke semua chat yang tersimpan.\n\n" +
-        "17. *!ping*\n" +
+        "17. *.ping*\n" +
         "    - Cek respons bot (pong!).\n\n" +
-        "18. *!time*\n" +
+        "18. *.time*\n" +
         "    - Tampilkan waktu server (Asia/Jakarta).\n\n" +
-        "19. *!addbadword <kata>*\n" +
+        "19. *.addbadword <kata>*\n" +
         "    - Tambah kata kasar baru yang dilarang.\n\n" +
-        "20. *!removebadword <kata>*\n" +
+        "20. *.removebadword <kata>*\n" +
         "    - Hapus kata kasar dari daftar.\n\n" +
-        "21. *!listbadwords*\n" +
+        "21. *.listbadwords*\n" +
         "    - Daftar kata-kata kasar yang dilarang.\n\n" +
-        "22. *!groupinfo*\n" +
+        "22. *.groupinfo*\n" +
         "    - Menampilkan nama grup, jumlah anggota, daftar admin.\n\n" +
-        "23. *!admins*\n" +
+        "23. *.admins*\n" +
         "    - Menampilkan daftar admin grup saja.\n\n" +
-        "24. *!welcome <on/off>*\n" +
+        "24. *.welcome <on/off>*\n" +
         "    - Aktifkan/matikan pesan welcome/farewell.\n\n" +
-        "25. *!antilink <on/off>*\n" +
+        "25. *.antilink <on/off>*\n" +
         "    - Aktifkan/matikan hapus otomatis pesan berisi link.\n\n" +
-        "26. *!setdesc <deskripsi>*\n" +
+        "26. *.setdesc <deskripsi>*\n" +
         "    - Ubah deskripsi grup.\n\n" +
-        "27. *!promote <userJid>*\n" +
+        "27. *.promote <userJid>*\n" +
         "    - Promosikan user menjadi admin.\n\n" +
-        "28. *!demote <userJid>*\n" +
+        "28. *.demote <userJid>*\n" +
         "    - Turunkan admin menjadi user biasa.\n\n" +
-        "29. *!tagall*\n" +
+        "29. *.tagall*\n" +
         "    - Mention seluruh member grup.\n\n" +
-        "30. *!groupinvite <pesan>*\n" +
+        "30. *.groupinvite <pesan>*\n" +
         "    - Kirim link undangan grup beserta pesan opsional.\n\n" +
-        "31. *!setinfo <teks>*\n" +
-        "    - Admin menetapkan informasi global. Semua orang bisa lihat dengan !info.\n\n" +
-        "32. *!membercount*\n" +
-        "    - Menampilkan jumlah anggota grup saat ini.\n\n" +
-        "33. *!randommember*\n" +
-        "    - Memilih satu anggota grup secara acak dan mention mereka.\n\n" +
-        "34. *!groupdesc*\n" +
-        "    - Menampilkan deskripsi grup jika ada (atau ‘(Tidak ada deskripsi)’).\n\n" +
-        "_Gunakan: !login <password> untuk login admin, lalu ketik perintah di atas._\n";
+        "31. *.setinfo <teks>*\n" +
+        "    - Admin menetapkan informasi global. Semua orang bisa lihat dengan .info.\n\n" +
+        "_Gunakan: .login <password> untuk login admin, lalu ketik perintah di atas._\n";
       await bot.sendMessage(from, { text: helpText });
       return;
     }
 
-    // ===== !chatid =====
-    if (trimmed === "!chatid") {
+    // ===== .chatid =====
+    if (trimmed === ".chatid") {
       const chatsMap = loadChats(); // { "<jid>": "<nama>" }
       const entries = Object.entries(chatsMap);
 
@@ -564,15 +560,15 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !jadwal =====
-    if (trimmed.startsWith("!jadwal ")) {
+    // ===== .jadwal =====
+    if (trimmed.startsWith(".jadwal ")) {
       const payload = trimmed.slice(8).trim();
       const parts = payload.split("+");
       if (parts.length < 3) {
         await bot.sendMessage(from, {
           text:
             "❗ Format salah. Contoh:\n" +
-            "!jadwal 48137449+senin+09.00(Halo @+6281234567890, jangan lupa besok rapat)",
+            ".jadwal 48137449+senin+09.00(Halo @+6281234567890, jangan lupa besok rapat)",
         });
         return;
       }
@@ -581,7 +577,7 @@ function isAdmin(userJid) {
       const chatIdResolved = resolveAlias(rawTarget, loadChats());
       if (!chatIdResolved) {
         await bot.sendMessage(from, {
-          text: `❗ Alias/JID tidak ditemukan: "${rawTarget}". Gunakan !chatid untuk melihat daftar.`,
+          text: `❗ Alias/JID tidak ditemukan: "${rawTarget}". Gunakan .chatid untuk melihat daftar.`,
         });
         return;
       }
@@ -653,8 +649,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !listjadwal =====
-    if (trimmed === "!listjadwal") {
+    // ===== .listjadwal =====
+    if (trimmed === ".listjadwal") {
       const schedules = loadSchedules();
       if (schedules.length === 0) {
         await bot.sendMessage(from, { text: "❗ Tidak ada jadwal tersimpan." });
@@ -675,15 +671,15 @@ function isAdmin(userJid) {
       });
       reply +=
         "Gunakan:\n" +
-        "• `!editjadwal <nomor> <hari>+<jam.menit>(<pesan>)`\n" +
-        "• `!hapusjadwal <nomor>`\n" +
-        "• `!clearjadwal`";
+        "• `.editjadwal <nomor> <hari>+<jam.menit>(<pesan>)`\n" +
+        "• `.hapusjadwal <nomor>`\n" +
+        "• `.clearjadwal`";
       await bot.sendMessage(from, { text: reply });
       return;
     }
 
-    // ===== !nextjadwal =====
-    if (trimmed === "!nextjadwal") {
+    // ===== .nextjadwal =====
+    if (trimmed === ".nextjadwal") {
       const schedules = loadSchedules();
       if (schedules.length === 0) {
         await bot.sendMessage(from, { text: "❗ Tidak ada jadwal tersimpan." });
@@ -723,12 +719,12 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !editjadwal =====
-    if (trimmed.startsWith("!editjadwal ")) {
+    // ===== .editjadwal =====
+    if (trimmed.startsWith(".editjadwal ")) {
       const partsAll = trimmed.split(" ");
       if (partsAll.length < 3) {
         await bot.sendMessage(from, {
-          text: "❗ Contoh: !editjadwal 2 kamis+18.45(Halo @+62812, ...)",
+          text: "❗ Contoh: .editjadwal 2 kamis+18.45(Halo @+62812, ...)",
         });
         return;
       }
@@ -802,13 +798,13 @@ function isAdmin(userJid) {
           `• Waktu: ${String(jamBaru).padStart(2, "00")}:${String(
             menitBaru
           ).padStart(2, "00")}\n` +
-          `• Pesan: ${msgNew}`,
+          `• Pesan: {msgNew}`,
       });
       return;
     }
 
-    // ===== !hapusjadwal =====
-    if (trimmed.startsWith("!hapusjadwal ")) {
+    // ===== .hapusjadwal =====
+    if (trimmed.startsWith(".hapusjadwal ")) {
       const idx = parseInt(trimmed.split(" ")[1], 10);
       const schedules = loadSchedules();
       if (isNaN(idx) || idx < 1 || idx > schedules.length) {
@@ -823,8 +819,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !clearjadwal =====
-    if (trimmed === "!clearjadwal") {
+    // ===== .clearjadwal =====
+    if (trimmed === ".clearjadwal") {
       const schedules = loadSchedules();
       schedules.forEach((entry) => {
         const job = schedule.scheduledJobs[entry.id];
@@ -835,15 +831,15 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !ingat =====
-    if (trimmed.startsWith("!ingat ")) {
+    // ===== .ingat =====
+    if (trimmed.startsWith(".ingat ")) {
       const payload = trimmed.slice(7).trim();
       const parts = payload.split("+");
       if (parts.length < 2) {
         await bot.sendMessage(from, {
           text:
             "❗ Format salah. Contoh:\n" +
-            "!ingat 48137449+2025-06-05+14.30(Hai @48137449, ingat rapat!)",
+            ".ingat 2025-06-05+14.30(Hai @48137449, ingat rapat!)",
         });
         return;
       }
@@ -851,7 +847,7 @@ function isAdmin(userJid) {
       const chatIdResolved = resolveAlias(targetAlias, loadChats());
       if (!chatIdResolved) {
         await bot.sendMessage(from, {
-          text: `❗ Alias/JID tidak ditemukan: "${targetAlias}". Gunakan !chatid untuk melihat daftar.`,
+          text: `❗ Alias/JID tidak ditemukan: "${targetAlias}". Gunakan .chatid untuk melihat daftar.`,
         });
         return;
       }
@@ -867,8 +863,12 @@ function isAdmin(userJid) {
       const dateStr = tmMsg.slice(0, ob).trim();
       const msgContent = tmMsg.slice(ob + 1, cb).trim();
 
-      const [datePart, timePart] = dateStr.split("+");
-      const [year, month, day] = datePart.split("-").map((x) => parseInt(x, 10));
+      if (!dateStr.includes(".")) {
+        await bot.sendMessage(from, { text: "❗ Format waktu harus HH.mm, contohnya 07.15." });
+        return;
+      }
+      const [tglPart, timePart] = dateStr.split("+");
+      const [year, month, day] = tglPart.split("-").map((x) => parseInt(x, 10));
       const [jamStrI, menitStrI] = timePart.split(".");
       const jamI = parseInt(jamStrI, 10);
       const menitI = parseInt(menitStrI, 10);
@@ -920,8 +920,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !listonetime =====
-    if (trimmed === "!listonetime") {
+    // ===== .listonetime =====
+    if (trimmed === ".listonetime") {
       const allOneTime = loadOneTime();
       const entries = Object.entries(allOneTime);
       if (entries.length === 0) {
@@ -939,13 +939,13 @@ function isAdmin(userJid) {
           `   • Waktu: ${dt}\n` +
           `   • Pesan: ${entry.message}\n\n`;
       });
-      reply += "Gunakan:\n• `!hapusot <nomor>` untuk menghapus pengingat one-time.\n";
+      reply += "Gunakan:\n• `.hapusot <nomor>` untuk menghapus pengingat one-time.\n";
       await bot.sendMessage(from, { text: reply });
       return;
     }
 
-    // ===== !hapusot =====
-    if (trimmed.startsWith("!hapusot ")) {
+    // ===== .hapusot =====
+    if (trimmed.startsWith(".hapusot ")) {
       const arg = trimmed.split(" ")[1];
       const idx = parseInt(arg, 10);
       let allOneTime = loadOneTime();
@@ -963,8 +963,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !nextonetime =====
-    if (trimmed === "!nextonetime") {
+    // ===== .nextonetime =====
+    if (trimmed === ".nextonetime") {
       const allOneTime = loadOneTime();
       const upcoming = Object.entries(allOneTime)
         .map(([key, entry]) => ({ key, timestamp: entry.timestamp, message: entry.message, chatId: entry.chatId }))
@@ -989,8 +989,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !status =====
-    if (trimmed === "!status") {
+    // ===== .status =====
+    if (trimmed === ".status") {
       const uptimeSeconds = Math.floor(process.uptime());
       const hours   = Math.floor(uptimeSeconds / 3600);
       const minutes = Math.floor((uptimeSeconds % 3600) / 60);
@@ -1017,11 +1017,11 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !broadcast =====
-    if (trimmed.startsWith("!broadcast ")) {
+    // ===== .broadcast =====
+    if (trimmed.startsWith(".broadcast ")) {
       const msgToSend = trimmed.slice(11).trim();
       if (!msgToSend) {
-        await bot.sendMessage(from, { text: "❗ Contoh: !broadcast Halo semua, ini pesan broadcast!" });
+        await bot.sendMessage(from, { text: "❗ Contoh: .broadcast Halo semua, ini pesan broadcast!" });
         return;
       }
       const chatsMapAll = loadChats();
@@ -1041,8 +1041,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !ping =====
-    if (trimmed === "!ping") {
+    // ===== .ping =====
+    if (trimmed === ".ping") {
       const startMs = Date.now();
       await bot.sendMessage(from, { text: "pong!" });
       const latency = Date.now() - startMs;
@@ -1050,18 +1050,18 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !time =====
-    if (trimmed === "!time") {
+    // ===== .time =====
+    if (trimmed === ".time") {
       const nowStr = new Date().toLocaleString("id-ID", { timeZone: "Asia/Jakarta" });
       await bot.sendMessage(from, { text: `🕒 Waktu server: ${nowStr}` });
       return;
     }
 
-    // ===== !addbadword =====
-    if (trimmed.startsWith("!addbadword ")) {
+    // ===== .addbadword =====
+    if (trimmed.startsWith(".addbadword ")) {
       const word = trimmed.slice(12).trim().toLowerCase();
       if (!word) {
-        await bot.sendMessage(from, { text: "❗ Contoh: !addbadword kacau" });
+        await bot.sendMessage(from, { text: "❗ Contoh: .addbadword kacau" });
         return;
       }
       let bannedList = loadBanned();
@@ -1077,11 +1077,11 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !removebadword =====
-    if (trimmed.startsWith("!removebadword ")) {
+    // ===== .removebadword =====
+    if (trimmed.startsWith(".removebadword ")) {
       const word = trimmed.slice(15).trim().toLowerCase();
       if (!word) {
-        await bot.sendMessage(from, { text: "❗ Contoh: !removebadword kacau" });
+        await bot.sendMessage(from, { text: "❗ Contoh: .removebadword kacau" });
         return;
       }
       let bannedList = loadBanned();
@@ -1097,8 +1097,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !listbadwords =====
-    if (trimmed === "!listbadwords") {
+    // ===== .listbadwords =====
+    if (trimmed === ".listbadwords") {
       const bannedList = loadBanned();
       if (bannedList.length === 0) {
         await bot.sendMessage(from, { text: "✅ Tidak ada kata terlarang dalam daftar." });
@@ -1112,8 +1112,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !groupinfo =====
-    if (trimmed === "!groupinfo") {
+    // ===== .groupinfo =====
+    if (trimmed === ".groupinfo") {
       if (!from.endsWith("@g.us")) {
         await bot.sendMessage(from, { text: "❗ Perintah ini hanya berlaku di grup." });
         return;
@@ -1145,8 +1145,8 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== !admins =====
-    if (trimmed === "!admins") {
+    // ===== .admins =====
+    if (trimmed === ".admins") {
       if (!from.endsWith("@g.us")) {
         await bot.sendMessage(from, { text: "❗ Perintah ini hanya berlaku di grup." });
         return;
@@ -1172,58 +1172,10 @@ function isAdmin(userJid) {
       return;
     }
 
-    // ===== FITUR BARU UNTUK GRUP (3 tambahan) =====
-    if (from.endsWith("@g.us")) {
-      // 1. !membercount => tampilkan jumlah anggota grup
-      if (trimmed === "!membercount") {
-        try {
-          const metadata = await bot.groupMetadata(from);
-          const count = metadata.participants.length;
-          await bot.sendMessage(from, { text: `👥 Jumlah anggota: ${count}` });
-        } catch {
-          await bot.sendMessage(from, { text: "❗ Gagal mengambil jumlah anggota." });
-        }
-        return;
-      }
-
-      // 2. !randommember => pilih satu anggota secara acak
-      if (trimmed === "!randommember") {
-        try {
-          const metadata = await bot.groupMetadata(from);
-          const participants = metadata.participants.map((p) => p.id);
-          if (participants.length === 0) {
-            await bot.sendMessage(from, { text: "❗ Grup kosong." });
-            return;
-          }
-          const randomJid = participants[Math.floor(Math.random() * participants.length)];
-          const name = loadChats()[randomJid] || randomJid.split("@")[0];
-          await bot.sendMessage(from, {
-            text: `🎲 Random Member: @${randomJid.split("@")[0]}\nNama: ${name}`,
-            mentions: [randomJid],
-          });
-        } catch {
-          await bot.sendMessage(from, { text: "❗ Gagal memilih random member." });
-        }
-        return;
-      }
-
-      // 3. !groupdesc => tampilkan deskripsi/grup tentang grup jika ada
-      if (trimmed === "!groupdesc") {
-        try {
-          const metadata = await bot.groupMetadata(from);
-          const desc = metadata.desc || "*(Tidak ada deskripsi)*";
-          await bot.sendMessage(from, { text: `📝 Deskripsi Grup:\n${desc}` });
-        } catch {
-          await bot.sendMessage(from, { text: "❗ Gagal mengambil deskripsi grup." });
-        }
-        return;
-      }
-    }
-
     // ===== PENGUJIAN PERINTAH TIDAK DIKENAL =======
-    if (trimmed.startsWith("!")) {
+    if (trimmed.startsWith(".")) {
       await bot.sendMessage(from, {
-        text: "❓ Perintah tidak dikenali. Ketik !help untuk daftar perintah.",
+        text: "❓ Perintah tidak dikenali. Ketik .help untuk daftar perintah.",
       });
     }
 
